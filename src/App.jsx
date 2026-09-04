@@ -13,24 +13,6 @@ const addJob = (newJob) => {
   console.log('New job added:', newJob);
 };
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<MainLayout />}>
-      <Route index element={<HomePage />} />
-      <Route path='/jobs' element={<JobsPage />} />
-      <Route path='/add-job' element={<AddJobPage addJobSubmit={addJob} />} />
-      <Route path='/jobs/:id' element={<JobPage />}  loader={jobLoader} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Route>
-  )
-)
-  // createRoutesFromElements(
-  //   <Route path="/" element={<App />}>
-  //     <Route index element={<Home />} />
-  //     <Route path="jobs" element={<ViewAllJobs />} />
-  //   </Route>
-  // )
-
 
 const App = () => {
   const addJob = async (newJob) => {
@@ -61,12 +43,4 @@ const router = createBrowserRouter(
     <RouterProvider router={router} />
   )
 }
-// <>
-//   <Navbar />
-//   <Hero />
-//   <HomeCards />
-//   <JobListings />
-//   <ViewAllJobs />
-// </>
-
 export default App

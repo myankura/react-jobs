@@ -17,8 +17,7 @@ const [contactPhone, setContactPhone] = useState('');
 
 const submitForm = (e) => {
     e.preventDefault();
-    //console.log(description);
-
+    
     const newJob = {
         type,
         title,

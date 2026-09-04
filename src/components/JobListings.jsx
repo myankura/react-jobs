@@ -1,4 +1,3 @@
-// import jobs from '../jobs.json'
 import { useEffect, useState } from 'react';
 
 import JobListing from './JobListing';
