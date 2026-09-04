@@ -4,7 +4,6 @@ import JobListing from './JobListing';
 import Spinner from './Spinner';
 
 const JobListings = ({ isHome = false }) => {
-  // const recentJobs = isHome ? jobs.slice(0, 3) : jobs;
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,10 +17,8 @@ const JobListings = ({ isHome = false }) => {
         const response = await fetch('http://localhost:5000/jobs');
         const data = await response.json();
         setJobs(data);
-        // setLoading(false);
       } catch (error) {
         console.error('Error fetching jobs:', error);
-        // setLoading(false);
       } finally {
         setLoading(false);
       }
