@@ -1,52 +1,54 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
 
-const AddJobPage = ({ addJobSubmit }) => {
-  
-  const [type, setType] = useState('Full-Time');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [salary, setSalary] = useState('Under $50K');
-  const [location, setLocation] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [companyDescription, setCompanyDescription] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactPhone, setContactPhone] = useState('');
-  
+const EditJobPage = ({ updateJobSubmit }) => {
+  const job = useLoaderData();
+
+  const [type, setType] = useState(job.type);
+  const [title, setTitle] = useState(job.title);
+  const [description, setDescription] = useState(job.description);
+  const [salary, setSalary] = useState(job.salary);
+  const [location, setLocation] = useState(job.location);
+  const [companyName, setCompanyName] = useState(job.company.name);
+  const [companyDescription, setCompanyDescription] = useState(job.company.description);
+  const [contactEmail, setContactEmail] = useState(job.company.contactEmail);
+  const [contactPhone, setContactPhone] = useState(job.company.contactPhone);
+
   const navigate = useNavigate();
 
   const submitForm = async (e) => {
-      e.preventDefault();
-      
-      const newJob = {
-          type,
-          title,
-          description,
-          salary,
-          location,
-          company: {
-            name: companyName,
-            description: companyDescription,
-            contactEmail: contactEmail,
-            contactPhone: contactPhone
-          }
-      };
+        e.preventDefault();
+        
+        const updatedJob = {
+            id: job.id,
+            type,
+            title,
+            description,
+            salary,
+            location,
+            company: {
+              name: companyName,
+              description: companyDescription,
+              contactEmail: contactEmail,
+              contactPhone: contactPhone
+            }
+        };
+  
+        try {
+            await updateJobSubmit(updatedJob);
+            navigate(`/jobs/${job.id}`, {
+                state: {
+                    message: 'Job listing updated successfully!',
+                    type: 'success'
+                }
+            });
+        } catch (error) {
+            toast.error('Unable to update job listing. Please try again.');
+        }
+    };
 
-      try {
-          await addJobSubmit(newJob);
-          navigate('/jobs', {
-              state: {
-                  message: 'Job listing added successfully!',
-                  type: 'success'
-              }
-          });
-      } catch (error) {
-          toast.error('Unable to add job listing. Please try again.');
-      }
-  };
   return (
-    <>
     <section className="bg-indigo-50">
       <div className="container m-auto max-w-2xl py-24">
         <div
@@ -221,15 +223,14 @@ const AddJobPage = ({ addJobSubmit }) => {
                 className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline"
                 type="submit"
               >
-                Add Job
+                Update Job
               </button>
             </div>
           </form>
         </div>
       </div>
     </section>
-    </>
   )
 }
 
-export default AddJobPage
+export default EditJobPage
