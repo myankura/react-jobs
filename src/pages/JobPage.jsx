@@ -8,14 +8,23 @@ const JobPage = ({ deleteJob }) => {
     const { id } = useParams();
     const job = useLoaderData();
 
-    const onDeleteClick = (jobId) => {
+    const onDeleteClick = async (jobId) => {
       const confirm = window.confirm('Are you sure you want to delete this listing?');
       if (!confirm) {
+        toast.info('Job listing deletion canceled.');
         return;
-      } else {
-        deleteJob(jobId);
-        toast.success('Job listing deleted successfully!');
-        navigate('/jobs');
+      }
+
+      try {
+        await deleteJob(jobId);
+        navigate('/jobs', {
+          state: {
+            message: 'Job listing deleted successfully!',
+            type: 'success'
+          }
+        });
+      } catch (error) {
+        toast.error('Unable to delete job listing. Please try again.');
       }
     }
 
@@ -98,7 +107,7 @@ const JobPage = ({ deleteJob }) => {
               >
                 Edit Job
               </Link>
-              <button onClick={ () => onDeleteClick(job.id)}
+              <button onClick={() => onDeleteClick(job.id)}
                 className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block"
               >
                 Delete Job
@@ -112,15 +121,11 @@ const JobPage = ({ deleteJob }) => {
   )
 };
 
-// const jobLoader = async () => {}
+const jobLoader = async ({ params }) => {
+    const response = await fetch(`/api/jobs/${params.id}`);
+    const data = await response.json();
 
-
-
-    const jobLoader = async ({ params }) => {
-        const response = await fetch(`/api/jobs/${params.id}`);
-        const data = await response.json();
-
-        return data;
-    }
+    return data;
+}
 
 export { JobPage as default, jobLoader };

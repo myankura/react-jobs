@@ -83,34 +83,6 @@
         "contactEmail": "contact@ipsumlorem.com",
         "contactPhone": "555-555-5555"
       }
-    },
-    {
-      "id": "IH5L82MiYjA",
-      "type": "Full-Time",
-      "title": "asdf",
-      "description": "asdf",
-      "salary": "Under $50K",
-      "location": "asasd",
-      "company": {
-        "name": "asdf",
-        "description": "asdf",
-        "contactEmail": "asd@ASD.com",
-        "contactPhone": "555-555-5555"
-      }
-    },
-    {
-      "id": "zASNS9sd5e8",
-      "type": "Full-Time",
-      "title": "124311",
-      "description": "123124",
-      "salary": "Under $50K",
-      "location": "1241",
-      "company": {
-        "name": "124",
-        "description": "124311",
-        "contactEmail": "12412@mmmm.com",
-        "contactPhone": "123-223-4456"
-      }
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

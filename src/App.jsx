@@ -31,11 +31,13 @@ const App = () => {
 
   // Delete Job
   const deleteJob = async (jobId) => {
-    //const response = 
-    await fetch((`/api/jobs/${jobId}`), {
+    const response = await fetch(`/api/jobs/${jobId}`, {
       method: 'DELETE'
     });
-    return;// response.json();
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete job: ${response.status}`);
+    }
   }
 
   // Update Job
